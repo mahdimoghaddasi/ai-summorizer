@@ -1,14 +1,22 @@
 import { useState, useEffect } from "react";
 import { copy, linkIcon, loader, trick } from '../assets';
+import { useLazyGetSummaryQuery } from "../services/article";
 
 const Demo = () => {
     const [article, setArticle] = useState({
         url: "",
         summary: ""
     });
+    const [getSummary, { error, isFetching }] = useLazyGetSummaryQuery();
 
     const handleSubmit = async (e) => {
-        alert("submited")
+        const { data } = await getSummary({ articleurl: article.url });
+
+        if (data?.summary) {
+            const newArticle = { ...article, summary: data.summary };
+
+            setArticle(newArticle);
+        }
     }
     return (
         <section className="mt-16 w-full max-w-xl">
@@ -20,14 +28,14 @@ const Demo = () => {
                         placeholder="Enter a URL"
                         type="url"
                         value={article.url}
-                        onChange={(e) => setArticle({...article, url: e.target.value})}
+                        onChange={(e) => setArticle({ ...article, url: e.target.value })}
                         required
                         className="url_input peer"
                     />
                     <button
                         type="submit"
                         className="submit_btn peer-focus:border-gray-700 peer-focus:text-gray-700">
-                            =
+                        =
                     </button>
                 </form>
             </div>
