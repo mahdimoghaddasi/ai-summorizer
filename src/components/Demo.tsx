@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { copy, linkIcon, loader, tick } from '../assets';
+import { copy, linkIcon, loader } from '../assets';
 import { useLazyGetSummaryQuery } from "../services/article";
 
 const Demo = () => {
@@ -25,7 +25,6 @@ const Demo = () => {
             const updatedArticles = [newArticle, ...allarticles];
             setArticle(newArticle);
             setAllArticles(updatedArticles);
-
             localStorage.setItem("articles", JSON.stringify(updatedArticles));
         }
     }
@@ -83,20 +82,19 @@ const Demo = () => {
                     </p>
                 ) : (
                     article.summary && (
-                    <div className="flex flex-col gap-3">
-                        <h2 className="font-satoshi font-bold text-gray-600 text-xl">
-                            Article <span className="blue_gradient">Summary
-
-                            </span>
-                        </h2>
-                        <div className="summary_box">
-                            <p>
-                                {article.summary}
-                            </p>
+                        <div className="flex flex-col gap-3">
+                            <h2 className="font-satoshi font-bold text-gray-600 text-xl">
+                                Article <span className="blue_gradient">Summary
+                                </span>
+                            </h2>
+                            <div className="summary_box">
+                                <p>
+                                    {article.summary}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                )
-            )}
+                    )
+                )}
             </div>
         </section>
 
